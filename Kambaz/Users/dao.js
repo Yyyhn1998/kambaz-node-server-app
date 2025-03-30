@@ -7,7 +7,12 @@ let { users } = db;
 export const findAllUsers = () => model.find();
 export const findUserById = (userId) => model.findById(userId);
 export const findUserByUsername = (username) =>  model.findOne({ username: username });
-export const findUserByCredentials = (username, password) =>  model.findOne({ username, password });
+export const findUserByCredentials = async (username, password) => {
+    console.log("🔍 Login Attempt:", username, password);
+    const user = await model.findOne({ username, password });
+    console.log("✅ Found:", user);
+    return user;
+};
 export const updateUser = (userId, user) => model.updateOne({ _id: userId }, { $set: user });
 /*export const findUserByUsername = (username) => users.find((user) => user.username === username);
 export const findAllUsers = () => users;
