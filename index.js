@@ -22,7 +22,7 @@ app.use(
     cors({
              credentials: true,
              origin: [
-                 "https://nenemomo-neu-1998.netlify.app",
+                 process.env.NETLIFY_URL || "https://nenemomo-neu-1998.netlify.app",
                  "http://localhost:5173"
              ]
          })
