@@ -22,11 +22,14 @@ app.use(
     cors({
              credentials: true,
              origin: [
-                 process.env.NETLIFY_URL || "https://nenemomo-neu-1998.netlify.app",
+                 process.env.NETLIFY_URL,
+                 "https://nenemomo-neu-1998.netlify.app",
                  "http://localhost:5173"
              ]
          })
 );
+
+app.options('*', cors());
 
 const sessionOptions = {
     secret: process.env.SESSION_SECRET || "kambaz",
@@ -39,7 +42,7 @@ if (process.env.NODE_ENV !== "development") {
     sessionOptions.cookie = {
         sameSite: "none",
         secure: true,
-        domain: process.env.NODE_SERVER_DOMAIN || "kambaz-node-server-app-1-qg4v.onrender.com"
+       // domain: process.env.NODE_SERVER_DOMAIN || "kambaz-node-server-app-1-qg4v.onrender.com"
     };
 }
 
