@@ -1,5 +1,30 @@
 import Database from "../Database/index.js";
 import { v4 as uuidv4 } from "uuid";
+import UserModel from "../Users/model.js";
+import model from "./model.js";
+export async function findCoursesForUser(userId) {
+    const enrollments = await model.find({ user: userId }).populate("course");
+    return enrollments.map((enrollment) => enrollment.course);
+}
+
+export async function findUsersForCourse(courseId) {
+    const enrollments = await model.find({ course: courseId }).populate("user");
+    return enrollments.map((enrollment) => enrollment.user);
+}
+export async function enrollUserInCourse(user, course) {
+    const _id = `${user}-${course}`;
+    const existing = await model.findById(_id);
+    if (existing) {
+        return { message: "Already enrolled" };
+    }
+    const newEnrollment = { user, course, _id };
+    return model.create(newEnrollment);
+}
+export function unenrollUserFromCourse(user, course) {
+    return model.deleteOne({ user, course });
+}
+
+
 
 export const findAllEnrollments = () => {
     return Database.enrollments;
@@ -13,29 +38,4 @@ export const findEnrollmentsByCourseId = (courseId) => {
     return Database.enrollments.filter(enrollment => enrollment.course === courseId);
 };
 
-export const enrollUserInCourse = (userId, courseId) => {
-    const exists = Database.enrollments.some(enrollment =>
-                                                 enrollment.user === userId && enrollment.course === courseId
-    );
-    if (exists) {
-        return null;
-    }
 
-    const newEnrollment = { _id: uuidv4(), user: userId, course: courseId };
-    Database.enrollments.push(newEnrollment);
-    return newEnrollment;
-};
-
-export const unenrollUserFromCourse = async (userId, courseId) => {
-    console.log("DAO: Unenrolling user", userId, "from course", courseId);
-
-    const index = Database.enrollments.findIndex(e => e.user === userId && e.course === courseId);
-    if (index === -1) {
-        console.error("DAO: Unenrollment failed - Enrollment not found");
-        return null;
-    }
-
-    const removedEnrollment = Database.enrollments.splice(index, 1);
-    console.log("DAO: Unenrollment success:", removedEnrollment);
-    return removedEnrollment;
-};

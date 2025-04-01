@@ -1,32 +1,18 @@
-import Database from "../Database/index.js";
-import { v4 as uuidv4 } from "uuid";
+//import Database from "../Database/index.js";
+//import { v4 as uuidv4 } from "uuid";
 
-export function findAllAssignments() {
-    return Database.assignments;
-}
+import AssignmentModel from "./model.js";
 
-export function findAssignmentsForCourse(courseId) {
-    return Database.assignments.filter(assignment => assignment.course === courseId);
-}
+export const findAllAssignments = () => AssignmentModel.find();
 
-export function createAssignment(assignment) {
-    const newAssignment = { ...assignment, _id: uuidv4() };
-    Database.assignments.push(newAssignment);
-    return newAssignment;
-}
+export const findAssignmentsForCourse = (courseId) =>
+    AssignmentModel.find({ course: courseId });
 
-export function updateAssignment(assignmentId, assignmentUpdates) {
-    const index = Database.assignments.findIndex(a => a._id === assignmentId);
-    if (index === -1) return { error: "Assignment not found" };
+export const createAssignment = (assignment) =>
+    AssignmentModel.create(assignment);
 
-    Database.assignments[index] = { ...Database.assignments[index], ...assignmentUpdates };
-    return { message: "Assignment updated successfully" };
-}
+export const updateAssignment = (assignmentId, updates) =>
+    AssignmentModel.updateOne({ _id: assignmentId }, { $set: updates });
 
-export function deleteAssignment(assignmentId) {
-    const index = Database.assignments.findIndex(a => a._id === assignmentId);
-    if (index === -1) return { error: "Assignment not found" };
-
-    Database.assignments.splice(index, 1);
-    return { message: "Assignment deleted successfully" };
-}
+export const deleteAssignment = (assignmentId) =>
+    AssignmentModel.deleteOne({ _id: assignmentId });

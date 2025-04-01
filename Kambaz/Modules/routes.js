@@ -11,5 +11,4 @@ export default function ModuleRoutes(app) {
         const status = await modulesDao.updateModule(moduleId, moduleUpdates);
         res.send(status);
     });
-
 }

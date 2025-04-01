@@ -1,16 +1,14 @@
 import model from "./model.js";
-import db from "../Database/index.js";
 import { v4 as uuidv4 } from "uuid";
-import Database from "../Database/index.js";
-let { users } = db;
+
 
 export const findAllUsers = () => model.find();
 export const findUserById = (userId) => model.findById(userId);
 export const findUserByUsername = (username) =>  model.findOne({ username: username });
 export const findUserByCredentials = async (username, password) => {
-    console.log("🔍 Login Attempt:", username, password);
+    console.log("Login Attempt:", username, password);
     const user = await model.findOne({ username, password });
-    console.log("✅ Found:", user);
+    console.log("Found:", user);
     return user;
 };
 export const updateUser = (userId, user) => model.updateOne({ _id: userId }, { $set: user });
@@ -26,12 +24,12 @@ export function findAllCourses() {
     return Database.courses;
 }
 */
-export function findCoursesForEnrolledUser(userId) {
+/* export function findCoursesForEnrolledUser(userId) {
     const { courses, enrollments } = Database;
     const enrolledCourses = courses.filter((course) =>
                                                enrollments.some((enrollment) => enrollment.user === userId && enrollment.course === course._id));
     return enrolledCourses;
-}
+} */
 
 export const findUsersByRole = (role) => model.find({ role: role });
 export const findUsersByPartialName = (partialName) => {
