@@ -49,7 +49,7 @@ if (process.env.NODE_ENV !== "development") {
     sessionOptions.cookie = {
         sameSite: "none",
         secure: true,
-       // domain: process.env.NODE_SERVER_DOMAIN || "kambaz-node-server-app-1-qg4v.onrender.com"
+       domain: process.env.NODE_SERVER_DOMAIN || "kambaz-node-server-app-1-qg4v.onrender.com"
     };
 }
 
