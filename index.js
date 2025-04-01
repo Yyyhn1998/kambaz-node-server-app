@@ -17,6 +17,7 @@ const CONNECTION_STRING =
 mongoose.connect(CONNECTION_STRING);
 
 const app = express();
+app.set("trust proxy", 1);
 
 app.use(
     cors({
