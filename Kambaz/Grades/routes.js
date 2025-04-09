@@ -1,4 +1,4 @@
-import * as dao from "./Dao.js";
+import * as dao from "./dao.js";
 
 export default function GradeRoutes(app) {
     app.get("/api/grades", async (req, res) => {
