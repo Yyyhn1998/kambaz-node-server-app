@@ -1,12 +1,12 @@
 import { findPeopleInCourse } from "./dao.js";
 
 export default function PeopleRoutes(app) {
-    app.get("/api/courses/:cid/people", (req, res) => {
+    app.get("/api/courses/:cid/people", async (req, res) => {
         const { cid } = req.params;
-        console.log("🔍 Fetching people for course:", cid);
+        console.log("Fetching people for course:", cid);
 
         try {
-            const courseUsers = findPeopleInCourse(cid);
+            const courseUsers = await findPeopleInCourse(cid);
             console.log("Returning users:", courseUsers);
             res.json(courseUsers);
         } catch (error) {

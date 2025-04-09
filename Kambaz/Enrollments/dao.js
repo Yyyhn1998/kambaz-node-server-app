@@ -1,5 +1,5 @@
 import Database from "../Database/index.js";
-import { v4 as uuidv4 } from "uuid";
+//import { v4 as uuidv4 } from "uuid";
 import UserModel from "../Users/model.js";
 import model from "./model.js";
 export async function findCoursesForUser(userId) {
@@ -35,8 +35,8 @@ export const findEnrollmentsByUserId = (userId) => {
     return Database.enrollments.filter(enrollment => enrollment.user === userId);
 };
 
-export const findEnrollmentsByCourseId = (courseId) => {
-    return Database.enrollments.filter(enrollment => enrollment.course === courseId);
+export const findEnrollmentsByCourseId = async (courseId) => {
+    return await model.find({ course: courseId });
 };
 
 

@@ -2,9 +2,10 @@ import Database from "../Database/index.js";
 import { findEnrollmentsByCourseId } from "../Enrollments/dao.js";
 import { findAllUsers } from "../Users/dao.js";
 
-export const findPeopleInCourse = (courseId) => {
-    const enrollments = findEnrollmentsByCourseId(courseId);
+export const findPeopleInCourse = async (courseId) => {
+    const enrollments = await findEnrollmentsByCourseId(courseId);
     const userIds = enrollments.map(enrollment => enrollment.user);
 
-    return findAllUsers().filter(user => userIds.includes(user._id));
+    const allUsers = await findAllUsers();
+    return allUsers.filter(user => user && user._id && userIds.includes(user._id));
 };
