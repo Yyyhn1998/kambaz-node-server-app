@@ -1,4 +1,4 @@
-import GradeModel from "./Model.js";
+import GradeModel from "./model.js";
 
 export const getAllGrades = () => GradeModel.find();
 
