@@ -28,7 +28,7 @@ app.use(
              credentials: true,
              origin: [
                  process.env.NETLIFY_URL,
-                 "https://nenemomo-neu-1998.netlify.app",
+                 "https://mellifluous-tapioca-776f3c.netlify.app",
                  "http://localhost:5173"
              ]
          })
